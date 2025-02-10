@@ -99,79 +99,98 @@ am startservice -n com.codeby.p1/.MyIntentService -a com.codeby.p1.action.downlo
 ----------------
 
 Добавленное поле для ввода пароля:
+
 ![alt text](assets/sovcomreport11.png)
 
 Передача введенного пароля в SecondActivity:
+
 ![alt text](assets/sovcomreport12.png)
 
 Измененный текст в TextView в MainActivity:
+
 ![alt text](assets/sovcomreport13.png)
 
 Занятие №5
 ----------------
 Стили получились такими:
 MainActivity:
+
 ![alt text](assets/sovcomreport14.png)
 
 SecondActivity:
+
 ![alt text](assets/sovcomreport15.png)
 
 FragmentWin:
+
 ![alt text](assets/sovcomreport116.png)
 
 Занятие №6
 ----------------
 ### Задание №1
 Локализация строк в strings.xml:
+
 ![alt text](assets/sovcomreport17.png)
 
 ![alt text](assets/sovcomreport18.png)
 
 Реализация проверки на эмулятор:
+
 ![alt text](assets/sovcomreport19.png)
 
 Реализация проверки рут окружения:
+
 ![alt text](assets/sovcomreport20.png)
 
 Реализация проверки целостности приложения:
+
 ![alt text](assets/sovcomreport21.png)
 
 Занятие №7
 ----------------
 ### Задание №1
 Изначально все проверки работают:
+
 ![alt text](assets/sovcomreport22.png)
 
 Для обхода проверок, необходимо пропатчить условия проверок возвращаемых значений функций  `isEmulator()`, `checkRoot()` и `checkCRT()`. 
 
 Весь патчинг в файле `SecondActivity.smali`:
 Код вызова и проверки результата `isEmulator()`:
+
 ![alt text](assets/sovcomreport23.png)
 
 Здесь можно просто заменить инструкцию, чтобы она совершала переход, когда переменная наоборот не равна нулю.
 
 Пропатченный код:
+
 ![alt text](assets/sovcomreport24.png)
 
 Аналогично были изменены условия и для остальных проверок.
 Старый код `checkRoot()`:
+
 ![alt text](assets/sovcomreport25.png)
+
 пропатченный код:
 ![alt text](assets/sovcomreport26.png)
 
 Старый код `checkCRT()`:
+
 ![alt text](assets/sovcomreport27.png)
 
 Здесь наоборот, `if-nez` заменить `if-eqz`:
+
 ![alt text](assets/sovcomreport28.png)
 
 Теперь все проверки на экране второй активности проходятся:
+
 ![alt text](assets/sovcomreport29.png)
 
 ### Задание №2
 Для перехода на вторую активность необходимо изменить атрибут кнопки на видимый:
 `android:visibility="visible"`
 Новый экран с кнопкой:
+
 ![alt text](assets/sovcomreport30.png)
 
 Для перехода на третью активность, на второй активности необходимо нажимать на элемент view, цвет которого не задан и размер которого небольшой. Я увеличил его размер и добавил атрибут другого цвета:
@@ -181,11 +200,14 @@ android:layout_width="200.0dip"
 android:layout_height="200.0dip"
 ```
 Новая вторая активность:
+
 ![alt text](assets/sovcomreport31.png)
 
 Кнопка перехода на четвертую активность станет кликабельной только в том случае, когда проверится подпись приложения. Чтобы не реверсить весь алгоритм проверки, можно пропатчить только условие проверки в ThirdActivity.smali:
+
 ![alt text](assets/sovcomreport32.png)
 Инструкцию if-eqz заменить на противоположную if-nez:
+
 ![alt text](assets/sovcomreport33.png)
 
 В четвертой активности первая кнопка увеличивает значение массива n на единицу, а вторая перенаправит на последнюю активность только в том случае, если первый элемент в n равен 9999. Три подхода: либо увеличиваем шаг на 9999, либо меняем проверку с 1 и один раз жмем на первую кнопку, либо просто меняем условие проверки на "не равно".
@@ -193,19 +215,24 @@ android:layout_height="200.0dip"
 Решил использовать третий вариант.
 
 Имя оригинального класса после обфускации:
+
 ![alt text](assets/sovcomreport34.png)
 
 Это x0.b. Так же это можно понять из .smali кода:
+
 ![alt text](assets/sovcomreport35.png)
 Можно увидеть, что создается новый экземпляр класса x0/ф, а так же в метод setOnCLickListener третьим значением передается единица.
 
 Код сравнения значения первого элемента массива с 9999:
+
 ![alt text](assets/sovcomreport36.png)
 
 Заменяю if-ne на if-eq:
+
 ![alt text](assets/sovcomreport37.png)
 
 После этого происходит переход на последнюю активность, где в элементе text указал свои фио:
+
 ![alt text](assets/sovcomreport38.png)
 
 
@@ -289,28 +316,34 @@ IVAN
 
 ### Задание №2
 Заметка сохранятся в скрытый файл `.u.txt` во внешнее хранилище по пути `/sdcard/Android/data/com.codeby.p3/files`.
+
 ![alt text](assets/sovcomreport39.png)
 
 ### Задание №3
 общая команда: `am start -n com.codeby.p3/.V4AcessControlActivity`
 Для вывода сообщения `Ура, ты нашел секрет`:
 `--es value1 "show me secret 1"`
+
 ![alt text](assets/sovcomreport40.png)
 
 Для вывода сообщения `Вот твои деньги:$100 000 000`:
 `--es value1 "show me the money"`
+
 ![alt text](assets/sovcomreport41.png)
 
 
 Для вывода сообщения `ты нашел еще секреты, молодец!`:
 `--es value1 "both" --ez flag true`
+
 ![alt text](assets/sovcomreport42.png)
 
 ### Задание №4
 Вызов нативного javascript метода:
+
 ![alt text](assets/sovcomreport43.png)
 
 данные сохранятся в `/data/data/com.codeby.p3/shared_prefs/fromWebView.xml`:
+
 ![alt text](assets/sovcomreport44.png)
 
 ### Задание №5
@@ -318,6 +351,7 @@ IVAN
 ```
 content insert --uri content://com.codeby.p3.data/data --bind c_row:s:"<script>document.write(document.cookie);</script>"
 ```
+
 ![alt text](assets/sovcomreport45.png)
 
 Занятие №10
@@ -335,9 +369,11 @@ content insert --uri content://com.codeby.p3.data/data --bind c_row:s:"<script>d
 am start -a android.intent.action.VIEW -d "https://notes.net?url=javascript:document.body.innerHTML='<h1>HACKED!</h1>'"
 ```
 Выполнение:
+
 ![alt text](assets/sovcomreport46.png)
 
 Я пробовал разместить файл с js кодом во внешнем хранилище, куда приложение сохраняет картинки заметок, однако результат такой:
+
 ![alt text](assets/sovcomreport47.png)
 
 ### Задание №2
@@ -363,7 +399,9 @@ android hooking watch class m4.z$a
 Класс `m4.j` судя по всему ответственен за обработку всей логики на экране авторизации: отображение лого, обработка введенных значений пароля и логина и т.д.
 
 Судя по всему, это код проверки введенных данных при авторизации:
+
 ![alt text](assets/sovcomreport48.png)
+
 Здесь происходит поиск сохраненного пароля в encryptedSharedPreferences по ключу email, однако если он не был зарегистрирован, то метод `getString()` вернет null.
 
 Далее восстановить логику проверки пароля при авторизации не смог, хотя подозрительно, что поля для ввода логина и пароля допускают ввод символа перевода строки.
@@ -379,6 +417,7 @@ Row: 0 uid=1, title=note1, text=my note 1, secret=phrase, photo=, user_login=mai
 Row: 1 uid=2, title=cghncghn, text=ghncgnh, secret=phrase, photo=file:///storage/emulated/0/Android/data/com.codeby.p4/files/msf%3A33, user_login=mail@mail.ru
 
 ```
+
 ![alt text](assets/sovcomreport49.png)
 
 Матчер `id/` работает следующим образом: последняя часть должна состоять из двух чисел азделенных точкой: первое - рандомное, которое выводится матчером `thirdparty`, второе - id строки. При этом в БД попадают записи не об уникальных пользователях, а об заметках. Поэтому для использования этого матчера, нужно сначала вызвать четвертый, узнать случайное значение, и затем вызвать второй.
@@ -391,7 +430,9 @@ Row: 0 uid=1, title=note1, text=my note 1, secret=phrase, photo=, user_login=mai
 generic_x86_arm:/ # content query --uri content://com.codeby.p4.notesprovider/id/1281045774.2                                                                                                    
 Row: 0 uid=2, title=cghncghn, text=ghncgnh, secret=phrase, photo=file:///storage/emulated/0/Android/data/com.codeby.p4/files/msf%3A33, user_login=mail@mail.ru
 ```
+
 ![alt text](assets/sovcomreport50.png)
+
 ### Задание №4
 В манифесте есть правило:
 `android:fullBackupContent="@xml/backup_rules"` - ссылка на файд в /res/xml, одержащем настройки при бэкапе приложения. в нашем случае, его содержимое:
@@ -439,6 +480,7 @@ abe unpack backup.ab backup.tar
 </network-security-config>
 ```
 Пример успешного просушивания:
+
 ![alt text](assets/sovcomreport51.png)
 
 ![alt text](assets/sovcomreport52.png)
@@ -458,28 +500,35 @@ abe unpack backup.ab backup.tar
 ```
 
 Пример успешного просушивания:
+
 ![alt text](assets/sovcomreport53.png)
 
 ![alt text](assets/sovcomreport54.png)
 
 ### Прослушивание трафика p6s-3
 В первую очередь, избавляемся от пиннинга в коде:
+
 ![alt text](assets/sovcomreport55.png)
 
 Ищем 46ю строку в .smali коде и удаляем ее:
+
 ![alt text](assets/sovcomreport56.png)
 
 Кроме этого, добавляем правила networkSecurityConfig аналогично предыдущим заданиям.
 Пример успешного просушивания:
+
 ![alt text](assets/sovcomreport57.png)
 
 ![alt text](assets/sovcomreport58.png)
+
 ### Прослушивание трафика p7
 На самом деле, не понял, почему именно приложение вылетает на старте, но попробовал выполнить все действия по открутке ssl пиннинга. После анализа кода, стало ясно, что он повторяет код приложения p6s-3, только обфусцирован. После переименования классов и методов, все стало еще яснее.
 Место, аналогичное пиннингу приложениии выше, здесь выглядит подобным образом:
+
 ![alt text](assets/sovcomreport59.png)
 
 Необходимо найти 13ю строку в smali коде и удалить ее:
+
 ![alt text](assets/sovcomreport60.png)
 
 А так же кроме этого, добавляем правила networkSecurityConfig аналогично предыдущим заданиям.
@@ -492,6 +541,7 @@ abe unpack backup.ab backup.tar
 Он байпасит именно эмулятор, на codeshare есть более универсальный байпасс (рут + эмулятор + пиннинг).
 
 В начале проверка работает:
+
 ![alt text](assets/sovcomreport61.png)
 
 Команда для запуска приложения через фриду с хуком:
@@ -500,6 +550,7 @@ frida -U -f com.codeby.p1 -l ../frida_hooks/emul_bypass.js
 ```
 
 Хук сработал:
+
 ![alt text](assets/sovcomreport62.png)
 
 Занятие №13
@@ -518,9 +569,11 @@ Java.perform(function () {
 ```
 
 Отработка хука:
+
 ![alt text](assets/sovcomreport63.png)
 
 Чистые данные в SharedRrefernces:
+
 ![alt text](assets/sovcomreport64.png)
 
 
@@ -598,6 +651,7 @@ print("[*] Script unloaded")
 ```
 
 Пример вызова:
+
 ![alt text](assets/sovcomreport65.png)
 
 Занятие №15
@@ -700,9 +754,11 @@ frida -U -f com.codeby.p7 -l ~/Workspace/mobile_pentest/frida_hooks/js_hooks/ssl
 ```
 
 Пример срабатывания хуков:
+
 ![alt text](assets/sovcomreport66.png)
 
 часто запросы к рамблеру очень медленно шли, отображения на экране не было, но запросы действительно перехватывались:
+
 ![alt text](assets/sovcomreport67.png)
 
 Занятие №16
@@ -713,6 +769,7 @@ frida -U -f com.codeby.p7 -l ~/Workspace/mobile_pentest/frida_hooks/js_hooks/ssl
 ```
 android sslpinning disable
 ```
+
 ![alt text](assets/sovcomreport68.png)
 
 Затем логика такая же, как и в задании 15:
@@ -728,6 +785,7 @@ android sslpinning disable
 (agent) Hooking com.squareup.okhttp.CertificatePinner.check(java.lang.String, [Ljava.security.cert.Certificate;)
 (agent) Hooking com.squareup.okhttp.CertificatePinner.findMatchingPins(java.lang.String)
 ```
+
 ![alt text](assets/sovcomreport69.png)
 
 
@@ -766,6 +824,7 @@ invalid PID
 ----------------
 MobSF поставил локально для возможности динамического анализа, однако в pdf отчет получить пока не могу, каких то зависимостей не хватает для формирования pdf.
 Результаты полученного отчета:
+
 ![alt text](assets/sovcomreport70.png)
 
 ![alt text](assets/sovcomreport71.png)
